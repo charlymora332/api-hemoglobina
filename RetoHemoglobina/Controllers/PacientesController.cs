@@ -6,7 +6,18 @@ namespace RetoHemoglobina.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class PacientesController : ControllerBase
+
+
 {
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(new { mensaje = "API Hemoglobina funcionando" });
+    }
+
+
+
     [HttpPost("procesar")]
     public ActionResult<RespuestaGeneral> ProcesarPacientes([FromBody] List<Paciente> pacientes)
     {

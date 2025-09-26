@@ -39,12 +39,12 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Habilitar Swagger en desarrollo o si defines la variable ENABLE_SWAGGER=true en Render
-var enableSwagger = app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("ENABLE_SWAGGER") == "true";
-if (enableSwagger)
-{
+//var enableSwagger = app.Environment.IsDevelopment() || Environment.GetEnvironmentVariable("ENABLE_SWAGGER") == "true";
+//if (enableSwagger)
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 // ── Importante: procesar headers reenviados por el proxy (X-Forwarded-Proto)
 //    Esto permite que UseHttpsRedirection() detecte correctamente HTTP/HTTPS
