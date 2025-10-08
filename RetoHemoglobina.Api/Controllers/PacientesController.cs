@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RetoHemoglobina.Models;
 using RetoHemoglobina.IServices;
+using RetoHemoglobina.Application.IServices;
 
 namespace RetoHemoglobina.Controllers
 {

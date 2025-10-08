@@ -1,5 +1,5 @@
 ﻿// modelo que guarda los totales de alertas por género
-namespace RetoHemoglobina.Models;
+namespace RetoHemoglobina.Domain.Models;
 
 public class ResumenTotales
 {

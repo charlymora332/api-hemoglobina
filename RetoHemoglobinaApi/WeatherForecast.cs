@@ -1,4 +1,4 @@
-namespace RetoHemoglobina
+namespace RetoHemoglobinaApi
 {
     public class WeatherForecast
     {

@@ -1,5 +1,6 @@
 ﻿//datos del que se reciben para procesar el paciente
-namespace RetoHemoglobina.Models
+namespace RetoHemoglobina.Domain.Models
+
 {
     public class Paciente
     {

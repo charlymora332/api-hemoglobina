@@ -7,33 +7,26 @@ namespace SubcadenasApi.Controllers
     [Route("api/[controller]")]
     public class SubcadenasController : ControllerBase
     {
-        /// <summary>
-        /// Método que obtiene todas las subcadenas de una longitud dada
-        /// y devuelve la más pequeña y la más grande en orden lexicográfico.
-        /// </summary>
-        /// <param name="cadena">La cadena original de texto</param>
-        /// <param name="tamanio">El tamaño de cada subcadena</param>
-        /// <returns>Lista de subcadenas + menor y mayor</returns>
         [HttpGet]
         public IActionResult ObtenerSubcadenas(string cadena, int tamanio)
         {
-            // Validación básica de parámetros
+            // Validacion tamanio no sea mayor al largo de la cadena
             if (string.IsNullOrEmpty(cadena) || tamanio <= 0 || tamanio > cadena.Length)
             {
                 return BadRequest("Parámetros inválidos.");
             }
 
-            // Lista donde guardaremos todas las subcadenas
+            
             List<string> listaSubcadenas = new List<string>();
 
-            // Inicializamos las variables con la primera subcadena
+            
             string masPequena = cadena.Substring(0, tamanio);
             string masGrande = cadena.Substring(0, tamanio);
 
             // Recorremos la cadena para sacar subcadenas de tamaño fijo
             for (int i = 0; i <= cadena.Length - tamanio; i++)
             {
-                // Tomamos una subcadena desde i con longitud = tamanio
+       
                 string subcadena = cadena.Substring(i, tamanio);
 
                 // Guardamos cada subcadena en la lista

@@ -1,6 +1,5 @@
 ﻿// modelo para devolver el resultado del análisis de hemoglobina por paciente 
-
-namespace RetoHemoglobina.Models;
+namespace RetoHemoglobina.Domain.Models;
 
 public class ResultadoPaciente
 {
