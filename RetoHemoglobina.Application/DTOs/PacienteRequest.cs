@@ -1,4 +1,4 @@
-﻿namespace RetoHemoglobina.Api.DTOs
+﻿namespace RetoHemoglobina.Application.DTOs
 {
     public class PacienteRequest
     {

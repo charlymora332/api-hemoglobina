@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina", "RetoHemoglobina\RetoHemoglobina.csproj", "{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina.Domain", "RetoHemoglobina.Domain\RetoHemoglobina.Domain.csproj", "{4C235C15-7D05-4703-8156-53060A618E02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina.Application", "RetoHemoglobina.Application\RetoHemoglobina.Application.csproj", "{72145A0B-C065-4853-BC31-530B102B553D}"
@@ -17,18 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina.Api", "Reto
 		{72145A0B-C065-4853-BC31-530B102B553D} = {72145A0B-C065-4853-BC31-530B102B553D}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "borrador", "borrador", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C235C15-7D05-4703-8156-53060A618E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C235C15-7D05-4703-8156-53060A618E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C235C15-7D05-4703-8156-53060A618E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,9 +36,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E23E0F0C-4A5C-4F9C-BA3F-573EE5B71988} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47776993-FB18-48B3-B740-714DABAF1789}

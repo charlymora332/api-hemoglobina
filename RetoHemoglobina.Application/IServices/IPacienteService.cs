@@ -1,4 +1,4 @@
-﻿using RetoHemoglobina.  Domain.Models;
+﻿using RetoHemoglobina.Domain.Models;
 
 namespace RetoHemoglobina.Application.IServices
 {
@@ -8,5 +8,7 @@ namespace RetoHemoglobina.Application.IServices
             RespuestaGeneral ProcesarPacientes(List<Paciente> pacientes);
         }
     }
+
+
 
 

@@ -1,11 +1,16 @@
 ﻿using Microsoft.OpenApi.Models;
-using RetoHemoglobina.IServices;
+
+using RetoHemoglobina.Application.IServices;
 using RetoHemoglobina.Services;
+using RetoHemoglobina.Application.Mappings;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Agregar controladores
 builder.Services.AddControllers();
+
+
 
 // ✅ Configurar Swagger
 builder.Services.AddEndpointsApiExplorer();
