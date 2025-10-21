@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using RetoHemoglobina.Application;
-using RetoHemoglobina.Application;
 using AutoMapper;
 using RetoHemoglobina.Domain.Models;
 using RetoHemoglobina.Application.IServices;
@@ -14,7 +11,7 @@ namespace RetoHemoglobina.Controllers
     public class PacientesController : ControllerBase
     {
         private readonly IPacienteService _pacienteService;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
 
         // Inyección de dependencia
@@ -23,50 +20,29 @@ namespace RetoHemoglobina.Controllers
             _pacienteService = pacienteService;
         }
 
-
-
-        // Inyección de dependencias
-        //public PacientesController(IPacienteService pacienteService, IMapper mapper)
-        //{
-        //    _pacienteService = pacienteService;
-        //    _mapper = mapper;
-        //}
-
         // POST: api/pacientes/procesar
         [HttpPost("procesar")]
-        public IActionResult ProcesarPacientes([FromBody] List<PacienteRequest> pacientesRequest)
+        public IActionResult ProcesarPacientes([FromBody] List<PacienteRequestDTO> pacientesRequest)
         {
             if (pacientesRequest == null || pacientesRequest.Count == 0)
             {
                 return BadRequest("Debe proporcionar una lista de pacientes.");
             }
 
+
             try
             {
                 // Llamar al servicio para procesar los pacientes
-                var pacientes = pacientesRequest.Select(p => new Paciente
-                {
-                    Nombre = p.Nombre,
-                    Genero = p.Genero,
-                    Nivel = p.Nivel
-                }).ToList();
+                //var pacientes = pacientesRequest.Select(p => new Paciente
+                //{
+                //    Nombre = p.Nombre,
+                //    Genero = p.Genero,
+                //    Nivel = p.Nivel
+                //}).ToList();
 
-
-
-
-                var respuesta = _pacienteService.ProcesarPacientes(pacientes);
-
-
-
-                // ✅ Mapeamos DTO → Modelo de dominio
-                //var pacientes = _mapper.Map<List<Paciente>>(pacientesRequest)
-
-                //// ✅ Llamamos al servicio
-                //var respuesta = _pacienteService.ProcesarPacientes(pacientes);
+                RespuestaGeneralDTO respuesta = _pacienteService.ProcesarPacientes(pacientesRequest);
 
                 return Ok(respuesta);
-
-
 
             }
             catch (ArgumentException ex)

@@ -1,3 +1,4 @@
+
 # ============================
 # Etapa de build
 # ============================
@@ -8,7 +9,7 @@ WORKDIR /src
 COPY RetoHemoglobina/*.csproj ./RetoHemoglobina/
 RUN dotnet restore ./RetoHemoglobina/RetoHemoglobina.csproj
 
-# Copiar todo y compilar en modo Release
+# Copiar todo el proyecto y compilar en modo Release
 COPY . .
 WORKDIR /src/RetoHemoglobina
 RUN dotnet publish -c Release -o /app/publish
@@ -18,5 +19,9 @@ RUN dotnet publish -c Release -o /app/publish
 # ============================
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
+
+# Copiar la publicación del build
 COPY --from=build /app/publish .
+
+# Ejecutar la API
 ENTRYPOINT ["dotnet", "RetoHemoglobina.dll"]

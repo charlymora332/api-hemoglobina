@@ -1,13 +1,14 @@
-﻿using RetoHemoglobina.Domain.Models;
+﻿using RetoHemoglobina.Application.DTOs;
+using RetoHemoglobina.Domain.Models;
 
-namespace RetoHemoglobina.Application.IServices
-{
- 
-        public interface IPacienteService
-        {
-            RespuestaGeneral ProcesarPacientes(List<Paciente> pacientes);
-        }
+namespace RetoHemoglobina.Application.IServices;
+
+
+    public interface IPacienteService
+    {
+        RespuestaGeneralDTO ProcesarPacientes(List<PacienteRequestDTO> pacienteRequestDTOs);
     }
+
 
 
 

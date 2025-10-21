@@ -1,4 +1,11 @@
-﻿namespace RetoHemoglobina.Domain.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RetoHemoglobina.Domain.Common.Alertas;
+
 
 public static class MensajesAlerta
 {
@@ -9,3 +16,4 @@ public static class MensajesAlerta
         { TipoAlerta.Alto,   "Alerta 2 (Alto)" }
     };
 }
+
