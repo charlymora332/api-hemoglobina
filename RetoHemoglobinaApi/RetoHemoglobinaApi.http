@@ -1,6 +1,0 @@
-@RetoHemoglobinaApi_HostAddress = http://localhost:5086
-
-GET {{RetoHemoglobinaApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
