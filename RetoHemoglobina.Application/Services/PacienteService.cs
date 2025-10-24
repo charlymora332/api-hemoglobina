@@ -7,10 +7,6 @@ using RetoHemoglobina.Application.DTOs;
 using RetoHemoglobina.Domain.Models;
 
 namespace RetoHemoglobina.Services;
-
-
-
-
 public class PacienteService : IPacienteService
 {
     public RespuestaGeneralDTO ProcesarPacientes(List<PacienteRequestDTO> pacienteRequestDTOs)
@@ -124,9 +120,9 @@ public class PacienteService : IPacienteService
         respuesta.Pacientes.Add(new ResultadoPaciente
         {
             Nombre = p.Nombre,
-            Genero = (byte)genero,
+            Genero = genero,
             Nivel = p.Nivel,
-            IdAlerta = (byte)tipoAlerta,
+            IdAlerta = tipoAlerta,
             Alerta = mensaje
         });
     }
