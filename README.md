@@ -266,10 +266,10 @@ public class ResultadoPaciente
 
 ## 👨‍💻 Autores
 
-Proyecto original: **charlymora332**  
-Fork mantenido por: **HMBC03**
+Proyecto original: **LOS EXTRATERRESTRES YA TU SABE**  
 
-GitHub: [@HMBC03](https://github.com/HMBC03)
+
+**Abusadol** *Brrr*
 
 ---
 
@@ -280,4 +280,5 @@ Este proyecto está bajo la Licencia MIT.
 ---
 
 ⭐ Si te fue útil, dale una estrella al repositorio
+
 
