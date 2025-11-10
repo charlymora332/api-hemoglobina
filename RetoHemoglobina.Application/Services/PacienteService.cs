@@ -3,97 +3,74 @@ using RetoHemoglobina.Application.Helpers;
 using RetoHemoglobina.Application.Intefaces;
 using RetoHemoglobina.Domain.Common.Alertas;
 using RetoHemoglobina.Domain.Common.Pacientes;
+using RetoHemoglobina.Domain.Exceptions;
 using RetoHemoglobina.Domain.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using RetoHemoglobina.Application.Validators;
 
 namespace RetoHemoglobina.Services;
 
 public class PacienteService : IPacienteService
 {
     private IPacienteRepository _pacienteRepository;
+    private IConsultaRepository _consultaRepository;
 
-    public PacienteService(IPacienteRepository pacienteRepository)
+    public PacienteService(IPacienteRepository pacienteRepository, IConsultaRepository consultaRepository)
     {
         _pacienteRepository = pacienteRepository;
+        _consultaRepository = consultaRepository;
     }
 
-    public async Task<List<ResultadoPacienteDTO>> ListarConsultas()
+    public async Task<List<ResultadoPacienteDTO>> ListarConsultasAsync()
     {
-        try
-        {
-            var consultas = await _pacienteRepository.ListarConsultas();
+        var consultas = await _consultaRepository.ListarConsultasAsync();
 
-            if (consultas == null || !consultas.Any())
-                throw new InvalidOperationException("No se encontraron consultas disponibles.");
+        if (consultas == null || !consultas.Any())
+            throw new InvalidOperationException("No se encontraron consultas disponibles.");
 
-            return consultas;
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Ocurrió un error en la capa de servicios al obtener las consultas.", ex);
-        }
+        return consultas;
     }
 
-    public async Task<List<PacienteDTO>> ListarPacientes()
+    public async Task<List<PacienteDTO>> ListarPacientesAsync()
     {
-        try
-        {
-            var general = await Task.Run(() =>
-            {
+        var consultas = await _pacienteRepository.ListarPacientesAsync();
 
-                var consultas = _pacienteRepository.ListarPacientes();
-                var consultass = _pacienteRepository.ListarPacientes();
-                var consultasss = _pacienteRepository.ListarPacientes();
-                return (consultas, consultass, consultasss);
-            });
- 
+        if (consultas == null || !consultas.Any())
+            throw new InvalidOperationException("No se encontraron pacientes disponibles.");
 
-            //if (consultas == null || !consultas.Any())
-            //  throw new InvalidOperationException("No se encontraron pacientes disponibles.");
-           //  Task.WaitAll(consultas,consultass, consultasss);
-
-            return  general.consultas.Result;
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Ocurrió un error en la capa de servicios al obtener la lista pacientes.", ex);
-        }
+        return consultas;
     }
 
-    public async Task<List<ResultadoPacienteDTO>> ListarConsultasPorPaciente(int identificacion)
+    public async Task<List<ResultadoPacienteDTO>> ListarConsultasPorPacienteAsync(int identificacion)
     {
-        try
-        {
-            var consultas = await _pacienteRepository.ListarConsultasPorPaciente(identificacion);
+        var paciente = await _pacienteRepository.ObtenerPorIdentificacionAsync(identificacion);
 
-            if (consultas == null || !consultas.Any())
-                throw new InvalidOperationException("No se encontraron consultas disponibles.");
+        if (paciente == null)
+            throw new InvalidOperationException($"No existe paciente con identificacion: {identificacion}");
 
-            return consultas;
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("Ocurrió un error en la capa de servicios al obtener consultas por paciente.", ex);
-        }
+        var consultas = await _consultaRepository.ListarConsultasPorPacienteAsync(identificacion);
+
+        return consultas;
     }
 
-    public RespuestaGeneralDTO? ProcesarPacientes(List<PacienteRequestDTO> pacienteRequestDTOs)
+    public async Task<RespuestaGeneralDTO?> ProcesarPacientesAsync(List<PacienteRequestDTO> pacienteRequestDTOs)
     {
         RespuestaGeneralDTO respuesta = new RespuestaGeneralDTO();
         try
         {
-            var pacientesValidos = pacienteRequestDTOs.Where(p => p != null
-                  && p.Identificacion != null
-                  && !string.IsNullOrWhiteSpace(p.Nombre)
-                  && p.GeneroId != null
-                  && p.Nivel != null).Select(p => new PacienteRequestDTO
-                  {
-                      Identificacion = p.Identificacion,
-                      Nombre = p.Nombre.Trim(),
-                      GeneroId = p.GeneroId,
-                      Nivel = p.Nivel
-                  }).ToList();
+            var pacientesValidos = pacienteRequestDTOs
+       .Where(p => p is { Identificacion: not null, Nombre: not null, GeneroId: not null, Nivel: not null })
+       .Select(p => new PacienteRequestDTO
+       {
+           Identificacion = p.Identificacion!.Value,
+           Nombre = p.Nombre.Trim(),
+           GeneroId = p.GeneroId!.Value,
+           Nivel = p.Nivel!.Value
+       })
+       .ToList();
 
-            ProcesarPacientesValidos(pacientesValidos, respuesta);
+            await ProcesarPacientesValidos(pacientesValidos, respuesta);
 
             return respuesta;
         }
@@ -104,67 +81,29 @@ public class PacienteService : IPacienteService
         }
     }
 
-    //Metodos privados
-    //private Paciente? ValidarYMapear(PacienteRequestDTO dto, int id, RespuestaGeneralDTO respuesta)
-    //{
-    //    List<string> camposFaltantes = new List<string>();
-
-    //    if (string.IsNullOrWhiteSpace(dto.Nombre)) camposFaltantes.Add("Nombre");
-    //    if (dto.Genero == null) camposFaltantes.Add("Genero");
-    //    if (dto.Nivel == null) camposFaltantes.Add("Nivel");
-
-    //    if (camposFaltantes.Any())
-    //    {
-    //        respuesta.Excepcion.Add(new Excepcion
-    //        {
-    //            Id = id,
-    //            Mensaje = $"Faltan campos obligatorios: {string.Join(", ", camposFaltantes)}"
-    //        });
-    //        return null;
-    //    }
-
-    //    return new Paciente
-    //    {
-    //        Nombre = dto.Nombre!,
-    //        Genero = dto.Genero!.Value,
-    //        Nivel = dto.Nivel!.Value
-    //    };
-    //}
-
-    private void ProcesarPacientesValidos(List<PacienteRequestDTO> pacientes, RespuestaGeneralDTO respuesta)
+    private async Task ProcesarPacientesValidos(List<PacienteRequestDTO> pacientes, RespuestaGeneralDTO respuesta)
     {
         for (int i = 0; i < pacientes.Count; i++)
         {
             var p = pacientes[i];
             try
             {
-                ValidarNivelGeneroYRegistrar(p, i + 1, respuesta);
+                PacienteValidacion.Validar(p, i + 1);
+                ResultadoPacienteDTO resultado = Calcular(p, respuesta);
+                respuesta.Pacientes.Add(resultado);
+                await VerificarYRegistrarPacienteAsync(resultado);
             }
-            catch (Exception ex)
+            catch (ValidacionException vex)
             {
-                respuesta.Excepcion.Add(new Excepcion
-                {
-                    Id = (i + 1),
-                    Mensaje = ex.Message
-                });
+                foreach (var err in vex.Errores)
+                    respuesta.Excepcion.Add(new Excepcion { Id = respuesta.Excepcion.Count + 1, Mensaje = err });
             }
         }
     }
 
-    private void ValidarNivelGeneroYRegistrar(PacienteRequestDTO p, int id, RespuestaGeneralDTO respuesta)
+    private ResultadoPacienteDTO Calcular(PacienteRequestDTO p, RespuestaGeneralDTO respuesta)
     {
-        if (p.Identificacion == 0)
-            throw new ArgumentException($"Numero de identificacion: {p.Identificacion} no válido para paciente {id} -> {p.Nombre}");
-
-        if (p.Nivel <= 0 || p.Nivel > 30)
-            throw new ArgumentException($"Nivel {p.Nivel} no válido para paciente {id} -> {p.Nombre}, nivel permitido deber ser mayor a 0 y menor a 30 .");
-
-        GeneroEnum genero = p.GeneroId switch
-        {
-            1 => GeneroEnum.Mujer,
-            2 => GeneroEnum.Hombre,
-            _ => throw new ArgumentException($"Genero {p.GeneroId} no válido para paciente {id} -> {p.Nombre}.")
-        };
+        var genero = (GeneroEnum)p.GeneroId;
 
         (float min, float max) = RangoHemoglobinaEnum.Rangos[genero];
 
@@ -189,8 +128,59 @@ public class PacienteService : IPacienteService
             Alerta = mensaje
         };
 
-        respuesta.Pacientes.Add(resultadoPaciente);
+        return resultadoPaciente;
+    }
 
-        _pacienteRepository.RegistrarConsultaR(resultadoPaciente);
+    //private static void Validar(PacienteRequestDTO p, int id)
+    //{
+    //    var errores = new List<string>();
+
+    //    if (p.Nivel <= 0 || p.Nivel > 30)
+    //        errores.Add($"Nivel {p.Nivel} no válido para paciente {id} -> {p.Nombre}, debe ser >0 y <=30.");
+
+    //    if (p.Identificacion == 0)
+    //        errores.Add($"Número de identificación: {p.Identificacion} no válido para paciente {id} -> {p.Nombre}");
+
+    //    GeneroEnum? generov = p.GeneroId switch
+    //    {
+    //        1 => GeneroEnum.Mujer,
+    //        2 => GeneroEnum.Hombre,
+    //        _ => null
+    //    };
+
+    //    if (!generov.HasValue)
+    //        errores.Add($"Género {p.GeneroId} no válido para paciente {id} -> {p.Nombre}.");
+
+    //    if (errores.Any())
+    //        throw new ValidacionException(errores);
+    //}
+
+    private async Task VerificarYRegistrarPacienteAsync(ResultadoPacienteDTO datos)
+    {
+        var paciente = await _pacienteRepository.ObtenerPorIdentificacionAsync(datos.Identificacion);
+
+        if (paciente == null)
+        {
+            var nuevoPaciente = new Paciente
+            {
+                Identificacion = datos.Identificacion,
+                GeneroId = datos.Genero,
+                Nombre = datos.Nombre
+            };
+            await _pacienteRepository.RegistrarPacienteAsync(nuevoPaciente);
+        }
+
+        await _consultaRepository.RegistrarConsultaAsync(datos);
     }
 }
+
+//private async Task ValidarNivelGeneroYRegistrar(PacienteRequestDTO p, int id, RespuestaGeneralDTO respuesta)
+//{
+//    Validar(p, id);
+
+//    ResultadoPacienteDTO resultado = Calcular(p, respuesta);
+
+//    respuesta.Pacientes.Add(resultado);
+//    await VerificarYRegistrarPacienteAsync(resultado);
+
+//}

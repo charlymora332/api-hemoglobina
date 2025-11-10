@@ -5,13 +5,16 @@ namespace RetoHemoglobina.Application.Intefaces
 {
     public interface IPacienteRepository
     {
-        void RegistrarConsultaR(ResultadoPacienteDTO consulta);
+        //void RegistrarConsultaR(ResultadoPacienteDTO consulta);
 
         //  void ListarConsultas();
-        Task<List<ResultadoPacienteDTO>> ListarConsultas();
+        //Task<List<ResultadoPacienteDTO>> ListarConsultas();
 
-        Task<List<PacienteDTO>> ListarPacientes();
+        Task<List<PacienteDTO>> ListarPacientesAsync();
 
-        Task<List<ResultadoPacienteDTO>> ListarConsultasPorPaciente(int identificacion);
+        //Task<List<ResultadoPacienteDTO>> ListarConsultasPorPaciente(int identificacion);
+        Task RegistrarPacienteAsync(Paciente paciente);
+
+        Task<Paciente?> ObtenerPorIdentificacionAsync(int identificacion);
     }
 }

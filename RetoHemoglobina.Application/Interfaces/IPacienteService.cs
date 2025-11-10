@@ -5,15 +5,11 @@ namespace RetoHemoglobina.Application.Intefaces;
 
 public interface IPacienteService
 {
-    RespuestaGeneralDTO? ProcesarPacientes(List<PacienteRequestDTO> pacienteRequestDTOs);
+    Task<RespuestaGeneralDTO?> ProcesarPacientesAsync(List<PacienteRequestDTO> pacienteRequestDTOs);
 
-    Task<List<ResultadoPacienteDTO>> ListarConsultas();
+    Task<List<ResultadoPacienteDTO>> ListarConsultasAsync();
 
-    Task<List<PacienteDTO>> ListarPacientes();
+    Task<List<PacienteDTO>> ListarPacientesAsync();
 
-    Task<List<ResultadoPacienteDTO>> ListarConsultasPorPaciente(int identificacion);
-
-    //  void ListarPacientes(List<PacienteRequestDTO> pacienteRequestDTOs);
-
-    // Task<List<ResultadoPacienteDTO>> ListarConsultas();
+    Task<List<ResultadoPacienteDTO>> ListarConsultasPorPacienteAsync(int identificacion);
 }

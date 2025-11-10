@@ -14,41 +14,7 @@ namespace RetoHemoglobina.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<ResultadoPacienteDTO>> ListarConsultas()
-        {
-            return await _context.Consultas
-               // .Where(m => m.Disponible && m.Aprobado)
-
-               .Select(m => new ResultadoPacienteDTO
-               {
-                   Nombre = m.Paciente.Nombre,
-                   Identificacion = m.Identificacion,
-                   Nivel = m.Nivel,
-                   IdAlerta = m.AlertaId,
-                   Alerta = m.Alerta.TipoAlerta,
-                   Genero = m.Paciente.GeneroId, // ← Trae el nombre del género
-               })
-               .ToListAsync();
-        }
-
-        public async Task<List<ResultadoPacienteDTO>> ListarConsultasPorPaciente(int identificacion)
-        {
-            return await _context.Consultas
-               .Where(m => m.Identificacion == identificacion)
-               .Select(m => new ResultadoPacienteDTO
-               {
-                   Nombre = m.Paciente.Nombre,
-                   Identificacion = m.Identificacion,
-                   Nivel = m.Nivel,
-                   IdAlerta = m.AlertaId,
-                   Alerta = m.Alerta.TipoAlerta,
-                   Genero = m.Paciente.GeneroId, // ← Trae el nombre del género
-               })
-               .ToListAsync();
-        }
-
-
-        public async Task<List<PacienteDTO>> ListarPacientes()
+        public async Task<List<PacienteDTO>> ListarPacientesAsync()
         {
             return await _context.Paciente
                // .Where(m => m.Disponible && m.Aprobado)
@@ -62,48 +28,18 @@ namespace RetoHemoglobina.Infrastructure.Repositories
                .ToListAsync();
         }
 
-        public void RegistrarConsultaR(ResultadoPacienteDTO resultadoPaciente)
+        public async Task<Paciente?> ObtenerPorIdentificacionAsync(int identificacion)
         {
-            try
-            {
-                Paciente paciente = new Paciente
-                {
-                    Identificacion = resultadoPaciente.Identificacion,
-                    GeneroId = resultadoPaciente.Genero,
-                    Nombre = resultadoPaciente.Nombre
-                };
-                ResultadoPaciente consulta = new ResultadoPaciente
-                {
-                    Identificacion = resultadoPaciente.Identificacion,
-                    Nivel = resultadoPaciente.Nivel,
-                    AlertaId = resultadoPaciente.IdAlerta,
-                };
-
-                int id = resultadoPaciente.Identificacion;
-
-                if (_context.Paciente.Find(id) == null)
-                {
-                    RegistrarPacienteR(paciente);
-                }
-
-                RegistrarPacienteConsulta(consulta);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error al obtener consultas desde la base de datos.", ex);
-            }
+            return await _context.Paciente
+                .FirstOrDefaultAsync(p => p.Identificacion == identificacion);
         }
 
-        private void RegistrarPacienteR(Paciente paciente)
-        {
-            _context.Paciente.Add(paciente);
-            _context.SaveChanges();
-        }
+        //}
 
-        private void RegistrarPacienteConsulta(ResultadoPaciente consulta)
+        public async Task RegistrarPacienteAsync(Paciente paciente)
         {
-            _context.Consultas.Add(consulta);
-            _context.SaveChanges();
+            await _context.Paciente.AddAsync(paciente);
+            await _context.SaveChangesAsync();
         }
     }
 }
