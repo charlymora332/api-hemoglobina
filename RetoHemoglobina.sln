@@ -13,7 +13,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina.Api", "RetoHemoglobina.Api\RetoHemoglobina.Api.csproj", "{77D3D89B-20F7-4023-9ACF-212386308A31}"
 	ProjectSection(ProjectDependencies) = postProject
 		{72145A0B-C065-4853-BC31-530B102B553D} = {72145A0B-C065-4853-BC31-530B102B553D}
+		{D26D5897-CB25-491D-847A-853980F32F4C} = {D26D5897-CB25-491D-847A-853980F32F4C}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetoHemoglobina.Infrastructure", "RetoHemoglobina.Infrastructure\RetoHemoglobina.Infrastructure.csproj", "{D26D5897-CB25-491D-847A-853980F32F4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +36,10 @@ Global
 		{77D3D89B-20F7-4023-9ACF-212386308A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D3D89B-20F7-4023-9ACF-212386308A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D3D89B-20F7-4023-9ACF-212386308A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26D5897-CB25-491D-847A-853980F32F4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26D5897-CB25-491D-847A-853980F32F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26D5897-CB25-491D-847A-853980F32F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26D5897-CB25-491D-847A-853980F32F4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

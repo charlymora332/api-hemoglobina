@@ -1,8 +1,4 @@
-﻿
-using RetoHemoglobina.Domain.Common.Alertas;
-using RetoHemoglobina.Domain.Common.Pacientes;
-
-namespace RetoHemoglobina.Domain.Models;
+﻿namespace RetoHemoglobina.Domain.Models;
 
 // modelo que guarda los totales de alertas por género
 public class ResumenTotales
@@ -14,5 +10,3 @@ public class ResumenTotales
     public int HombresAlerta2 { get; set; }
     public int HombresSin { get; set; }
 }
-
-

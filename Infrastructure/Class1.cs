@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RetoHemoglobina.Domain.Common.Pacientes;
-
-public enum Genero : byte
+namespace Infrastructure
 {
-    Mujer = 1,
-    Hombre = 2
+    public class Class1
+    {
+    }
 }
-
